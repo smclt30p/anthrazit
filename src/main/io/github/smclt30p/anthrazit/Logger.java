@@ -64,7 +64,9 @@ public class Logger implements LoggerInfo {
             out = new FileOutputStream(log);
 
             write(LOGTAG, "Successfully started at " + startTime, INFO);
-            write(LOGTAG, "fileName: " + fileName + "-" + startTime + ".log, logPath: " + logPath + ", exitOnFatal: " + exitOnFatal + ", debug: true", DEBUG);
+            write(LOGTAG, "fileName: " + fileName + "-" + startTime + ".log, logPath: " 
+            + logPath + ", exitOnFatal: " + exitOnFatal + ", debug: true", DEBUG);
+
         } catch (IOException e) {
             errorOnInit(e);
         }
