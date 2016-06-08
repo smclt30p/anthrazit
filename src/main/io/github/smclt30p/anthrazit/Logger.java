@@ -94,7 +94,7 @@ public class Logger implements LoggerInfo {
                 message = "[" + logtime + "] {FATAL} " + logtag + ": " + reason + "\n";
                break;
             case EXCEPTION:
-                message = "[" + logtime + "[ {EXCEPTION} " + reason;
+                message = "[" + logtime + "] {EXCEPTION} " + reason;
                 break;
             default:
                 message = "Anthrazit error! Invalid severity: " + severity;
