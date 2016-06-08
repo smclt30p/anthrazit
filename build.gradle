@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'io.github.smclt30p.anthrazit.Main'
+
+version = 1.0
+
+def versionPropsFile = file('version.properties')
+def code;
+
+if (versionPropsFile.canRead()) {
+	def Properties versionProps = new Properties()
+	versionProps.load(new FileInputStream(versionPropsFile))
+	code = versionProps['VERSION_CODE'].toInteger() + 1
+
+	versionProps['VERSION_CODE']=code.toString()
+	versionProps.store(versionPropsFile.newWriter(), null)
+
+} else {
+	throw new GradleException("Could not read version.properties!")
+}
+
+sourceSets {
+   main {
+      java {
+         srcDir 'src/main'
+      }
+   }
+	
+   test {
+      java {
+         srcDir 'src/test'
+      }
+   }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'io.github.smclt30p.anthrazit',
+                   'Implementation-Version': code,
+                   'Implementation-Vendor' : 'Ognjen Galic (smclt30p)',
+                   'Specification-Vendor': 'Ognjen Galic (smclt30p)',
+                   'Specification-Version' : version,
+                   'Specification-Title': 'Anthrazit Logger'
+    }       
+} 
