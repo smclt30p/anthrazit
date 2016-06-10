@@ -22,14 +22,34 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+/**
+ * This is Anthrazit's main class used inside code,
+ * the Logger.
+ *
+ * Please see the method init() for more details.
+ *
+ * <b>This class cannot be instantiated. Please use getLogger() instead.</b>
+*/
 public class Logger implements LoggerInfo {
-    
+   
+    /**
+     * Debug levels of logging.
+    */
     public static final int DEBUG = 0;
+    /**
+     * Info levels of logging.
+    */
     public static final int INFO = 1;
+    /**
+     * Error levels of logging.
+    */
     public static final int ERROR = 2;
+    /**
+     * FATAL levels of logging.
+    */
     public static final int FATAL = 3;
-    public static final int EXCEPTION = 4;
 
+    private static final int EXCEPTION = 4;
     private static final String LOGTAG = "anthrazit";
 
     private static boolean exitOnFatal;
@@ -44,6 +64,30 @@ public class Logger implements LoggerInfo {
 
     }
 
+    /**
+     * This method is used to initialize the Anthrazit logger.
+     *
+     * There is 4 levels of severity:
+     *          DEBUG: Gets printed only if debug is enabled
+     *          INFO: Used for standard information
+     *          ERROR: Prints errors
+     *          FATAL: Fatal errors, can be specified if the program
+     *          should be exited if this error occurs.
+     *
+     * Anhtrazit is a logger that writes logs in runtime, while it is running,
+     * it is not buffered.
+     *
+     * If debug is enabled, the stack trace is logged to file and printed to stdout.
+     *
+     * Logs are saved as .log files, with a filename and a Unix Epoch timestamp.
+     *
+     * @param logPath The path for Anthrazit to save the log to. Without the trailing "/".
+     * @param fileName The file name of the log. You specify this "fileName"-timestamp.log.
+     * @param exitOnFatal Should Anthrazit bail out of the program if an Fatal error occurs.
+     * @param debug Should debug be enabled.
+     * @author Ognjen Galic (smclt30p@gmail.com)
+     * @since 1.0
+    */
     @Override
     public void init(String logPath, String fileName, boolean exitOnFatal, boolean debug) {
 
@@ -72,7 +116,21 @@ public class Logger implements LoggerInfo {
         }
 
     }
- 
+
+    /**
+     * Write messages to the log file.
+     *
+     * This method is used to write messages to the log file. 
+     * The message format is like this:
+     *
+     * [timestamp] {SEVERITY} logtag: Message
+     * 
+     * @param logtag The log tag of the specified object.
+     * @param reason The message itself.
+     * @param severity The severity. Use Logger.SEVERITY here.
+     * @author Ognjen Galic (smclt30p@gmail.com)
+     * @since 1.0
+    */
     @Override
     public synchronized void write(String logtag, String reason, int severity) {
         
@@ -113,7 +171,17 @@ public class Logger implements LoggerInfo {
         }
   
     }
-   
+    
+    /**
+     * Close the log file.
+     *
+     * This method closes the log file. This should be called at the end
+     * of your program, or exceptions may occur. If they do, exit on fatal
+     * in init will be respected.
+     *
+     * @author Ognjen Galic (smclt30p@gmail.com)
+     * @since 1.0
+    */
     @Override
     public void close() {
         try {
@@ -123,10 +191,28 @@ public class Logger implements LoggerInfo {
         }
     }
 
-    public static Logger getLogger() {
+    /**
+     * Get the logger instance.
+     *
+     * A logger cannot be instaniated. Please use getLogger()
+     * to get an instance.
+     *
+     * @return The logger instance
+    */
+    public synchronized static Logger getLogger() {
         return instance == null ? new Logger() : instance;
     }
 
+    /**
+     * Catch an exception and log it to file.
+     *
+     * This is used for exception logging. If debug is enabled, 
+     * the exception will also be printed to stdout.
+     *
+     * @param e The exception to log.
+     * @author Ognjen Galic (smclt30p@gmail.com)
+     * @since 1.0
+    */
     @Override
     public synchronized void catchException(Exception e) {
         
