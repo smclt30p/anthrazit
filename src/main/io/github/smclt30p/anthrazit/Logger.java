@@ -216,7 +216,7 @@ public class Logger implements LoggerInfo {
     @Override
     public synchronized void catchException(Exception e) {
         
-        String trace = e.toString() + "%\n";
+        String trace = e.toString() + "% \n";
         
         for (StackTraceElement el : e.getStackTrace()) {
             trace += "\t\t at " + el.toString() + "\n";
