@@ -21,6 +21,7 @@ package io.github.smclt30p.anthrazit;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This is Anthrazit's main class used inside code,
@@ -152,14 +153,14 @@ public class Logger implements LoggerInfo {
                 message = "[" + logtime + "] {FATAL} " + logtag + "% " + reason + "\n$";
                break;
             case EXCEPTION:
-                message = "[" + logtime + "] {EXCEPTION} " + reason + "\n$";
+                message = "[" + logtime + "] {EXCEPTION} " + logtag + "% " + reason + "\n$";
                 break;
             default:
                 message = "Anthrazit error! Invalid severity: " + severity;
         } 
 
         try {
-            out.write(message.getBytes());
+            out.write(message.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             errorOnInit(e);
         }
@@ -214,15 +215,15 @@ public class Logger implements LoggerInfo {
      * @since 1.0
     */
     @Override
-    public synchronized void catchException(Exception e) {
+    public synchronized void catchException(String logTag, Exception e) {
         
-        String trace = e.toString() + "% \n";
+        String trace = e.toString() + "\n";
         
         for (StackTraceElement el : e.getStackTrace()) {
             trace += "\t\t at " + el.toString() + "\n";
         }
 
-        write("Exception", trace, EXCEPTION);
+        write(logTag, trace, EXCEPTION);
 
     }
 
@@ -237,5 +238,4 @@ public class Logger implements LoggerInfo {
             e.printStackTrace();
         }
     }
-
 }
