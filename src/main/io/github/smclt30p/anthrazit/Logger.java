@@ -140,19 +140,19 @@ public class Logger implements LoggerInfo {
         switch (severity) {
             case DEBUG:
                 if (!debug) return;
-                message = "[" + logtime + "] {DEBUG} " + logtag + ": " + reason + "$\n";
+                message = "[" + logtime + "] {DEBUG} " + logtag + ": " + reason + "\n$";
                 break;
             case INFO:
-                message = "[" + logtime + "] {INFO} " + logtag + ": " + reason + "$\n";
+                message = "[" + logtime + "] {INFO} " + logtag + ": " + reason + "\n$";
                 break;
             case ERROR:
-                message = "[" + logtime + "] {ERROR} " + logtag + ": " + reason + "$\n";
+                message = "[" + logtime + "] {ERROR} " + logtag + ": " + reason + "\n$";
                 break;
             case FATAL:
-                message = "[" + logtime + "] {FATAL} " + logtag + ": " + reason + "$\n";
+                message = "[" + logtime + "] {FATAL} " + logtag + ": " + reason + "\n$";
                break;
             case EXCEPTION:
-                message = "[" + logtime + "] {EXCEPTION} " + reason + "$\n";
+                message = "[" + logtime + "] {EXCEPTION} " + reason + "\n$";
                 break;
             default:
                 message = "Anthrazit error! Invalid severity: " + severity;
