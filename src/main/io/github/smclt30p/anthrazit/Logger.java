@@ -210,6 +210,7 @@ public class Logger implements LoggerInfo {
      * the exception will also be printed to stdout.
      *
      * @param e The exception to log.
+     * @param logTag The log tag to use
      * @author Ognjen Galic (smclt30p@gmail.com)
      * @since 1.0
     */
