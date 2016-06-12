@@ -22,5 +22,5 @@ interface LoggerInfo {
     void write(String logtag, String reason, int severity);
     void init(String logPath, String fileName, boolean exitOnFatal, boolean debug);
     void close();
-    void catchException(Exception e);
+    void catchException(String logTag, Exception e);
 }
