@@ -29,7 +29,13 @@ public class Main {
         try {
             FileOutputStream out = new FileOutputStream("/");
         } catch (IOException e) {
-            log.catchException(e);
+            log.catchException("main", e);
         }
+
+        log.write("main", "This is an error", Logger.ERROR);
+        log.write("main", "This is debug", Logger.DEBUG);
+        log.write("main", "This is info", Logger.INFO);
+        log.write("main", "This is fatal", Logger.FATAL);
+        log.close();
     }
 }
