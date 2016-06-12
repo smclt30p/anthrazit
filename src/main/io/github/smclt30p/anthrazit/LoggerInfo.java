@@ -19,7 +19,7 @@ package io.github.smclt30p.anthrazit;
 */
 
 interface LoggerInfo {
-    void write(String logtag, String reason, int severity);
+    void write(String logtag, String reason, String severity);
     void init(String logPath, String fileName, boolean exitOnFatal, boolean debug);
     void close();
     void catchException(String logTag, Exception e);

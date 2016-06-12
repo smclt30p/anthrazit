@@ -37,21 +37,21 @@ public class Logger implements LoggerInfo {
     /**
      * Debug levels of logging.
     */
-    public static final int DEBUG = 0;
+    public static final String DEBUG = "DEBUG";
     /**
      * Info levels of logging.
     */
-    public static final int INFO = 1;
+    public static final String INFO = "INFO";
     /**
      * Error levels of logging.
     */
-    public static final int ERROR = 2;
+    public static final String ERROR = "ERROR";
     /**
      * FATAL levels of logging.
     */
-    public static final int FATAL = 3;
+    public static final String FATAL = "FATAL";
 
-    private static final int EXCEPTION = 4;
+    private static final String EXCEPTION = "EXCEPTION";
     private static final String LOGTAG = "anthrazit";
 
     private static boolean exitOnFatal;
@@ -131,34 +131,23 @@ public class Logger implements LoggerInfo {
      * @since 1.0
     */
     @Override
-    public synchronized void write(String logtag, String reason, int severity) {
+    public synchronized void write(String logtag, String reason, String severity) {
         
         long logtime = System.currentTimeMillis();
-        String message = "";
+        StringBuilder message = new StringBuilder();
 
-        switch (severity) {
-            case DEBUG:
-                if (!debug) return;
-                message = "[" + logtime + "] {DEBUG} " + logtag + "% " + reason + "\n$";
-                break;
-            case INFO:
-                message = "[" + logtime + "] {INFO} " + logtag + "% " + reason + "\n$";
-                break;
-            case ERROR:
-                message = "[" + logtime + "] {ERROR} " + logtag + "% " + reason + "\n$";
-                break;
-            case FATAL:
-                message = "[" + logtime + "] {FATAL} " + logtag + "% " + reason + "\n$";
-               break;
-            case EXCEPTION:
-                message = "[" + logtime + "] {EXCEPTION} " + logtag + "% " + reason + "\n$";
-                break;
-            default:
-                message = "Anthrazit error! Invalid severity: " + severity;
-        } 
+        message.append("[")
+               .append(logtime)
+               .append("] {")
+               .append(severity)
+               .append("} ")
+               .append(logtag)
+               .append("% ")
+               .append(reason)
+               .append("\n$");
 
         try {
-            out.write(message.getBytes(StandardCharsets.UTF_8));
+            out.write(message.toString().getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             errorOnInit(e);
         }
