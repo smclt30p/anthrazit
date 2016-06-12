@@ -152,7 +152,7 @@ public class Logger implements LoggerInfo {
             errorOnInit(e);
         }
 
-        if (exitOnFatal && severity == FATAL) {
+        if (exitOnFatal && severity.equals(FATAL)) {
             System.err.println("Anthrazit exit on fatal: " + message + ". Please check the logs.");
             close();
             System.exit(1);
