@@ -20,6 +20,7 @@ package io.github.smclt30p.anthrazit;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -59,7 +60,7 @@ public class Logger implements LoggerInfo {
 
     private static Logger instance;
     private static File log;
-    private static FileOutputStream out;
+    private static BufferedOutputStream out;
 
     private Logger() {
 
@@ -74,9 +75,6 @@ public class Logger implements LoggerInfo {
      *          ERROR: Prints errors
      *          FATAL: Fatal errors, can be specified if the program
      *          should be exited if this error occurs.
-     *
-     * Anhtrazit is a logger that writes logs in runtime, while it is running,
-     * it is not buffered.
      *
      * If debug is enabled, the stack trace is logged to file and printed to stdout.
      *
@@ -106,7 +104,7 @@ public class Logger implements LoggerInfo {
                 throw new IOException("Error creating new log file: " + path);
             }
             
-            out = new FileOutputStream(log);
+            out = new BufferedOutputStream(new FileOutputStream(log), 4096);
 
             write(LOGTAG, "Successfully started at " + startTime, INFO);
             write(LOGTAG, "fileName: " + fileName + "-" + startTime + ".log, logPath: " 
@@ -186,6 +184,7 @@ public class Logger implements LoggerInfo {
     @Override
     public void close() {
         try {
+            out.flush();
             out.close();
         } catch (IOException e) {
             errorOnInit(e);
