@@ -228,13 +228,15 @@ public class Logger implements LoggerInfo {
 
     private void errorOnInit(Exception e) {
         System.err.println("Anthrazit error: " + e.toString());
+
+        if (debug) {
+            e.printStackTrace();
+        }
+
         if (exitOnFatal) {
             System.err.println("Anthrazit exit on fatal: Bailing...");
             close();
             System.exit(1);
-        }
-        if (debug) {
-            e.printStackTrace();
         }
     }
 }
