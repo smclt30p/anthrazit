@@ -216,13 +216,13 @@ public class Logger implements LoggerInfo {
     @Override
     public synchronized void catchException(String logTag, Exception e) {
         
-        String trace = e.toString() + "\n";
+        StringBuilder trace = new StringBuilder(e.toString() + "\n");
         
         for (StackTraceElement el : e.getStackTrace()) {
-            trace += "\t\t at " + el.toString() + "\n";
+            trace.append("\t\t at " + el.toString() + "\n");
         }
 
-        write(logTag, trace, EXCEPTION);
+        write(logTag, trace.toString(), EXCEPTION);
 
     }
 
