@@ -222,6 +222,10 @@ public class Logger implements LoggerInfo {
             trace.append("\t\t at " + el.toString() + "\n");
         }
 
+        if (debug) {
+            e.printStackTrace();
+        }
+
         write(logTag, trace.toString(), EXCEPTION);
 
     }
